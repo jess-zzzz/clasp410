@@ -1,0 +1,24 @@
+Which scenario has the smaller t? From T=90 to T=65 OR T=85 to T=60?
+
+Create an array for t
+  t begins at 0, ends at ???
+
+Scenario 1: T_i at 90
+
+  
+Scenario 2: T_i at 85
+
+#### Problem steps
+Define variables
+  t = 0
+  T_i = 90 OR 85
+  T_env = (given)
+
+Define function 
+  ... [insert eq.]
+
+Use function! Define T for each value of t (for both scenarios)
+  T1 = function(t)
+  T2 = function(t)
+
+PLOT!
