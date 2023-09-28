@@ -13,29 +13,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # create time array
-t_final, t_step = 600, 1
-time = np.arange(0, t_final, t_step)
+t_final, t_step = 600, 1    # in seconds
+t = np.arange(0, t_final, t_step)
 
 
 
-def solve_temp(time, k=.005, T_env=25, T_init=90):
+def solve_temp(t, k=.005, T_env=25, T_init=90):
     '''
     This function takes takes an array of times and returns an array of temperatures
     corresponding to each time.
 
     Parameters
     ==========
-    time: numpy array of time
+    t: numpy array of time
         array of time inputs for which you want corresponding temps
-    k: Newton cooling constant
     
-
     Other Parameters
     ================
+    k: Newton cooling constant
+    T_env: temperature of environment
+    T_init: initial temperature of coffee
+
+    Returns
+    =======
+    T: array of temperature outputs corresponding given time inputs
 
     '''
 
     T = T_env + (T_init - T_env) * np.exp(-k * time)
+    
     return T
 
 T = solve_temp(time)
