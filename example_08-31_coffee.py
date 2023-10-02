@@ -40,20 +40,45 @@ def solve_temp(t, k=.005, T_env=25, T_init=90):
 
     '''
 
-    T = T_env + (T_init - T_env) * np.exp(-k * time)
+    T = T_env + (T_init - T_env) * np.exp(-k * t)
     
     return T
 
-T = solve_temp(time)
-print(T)
-plt.plot(time, T)
-plt.show()
+def time_to_targ(T_targ, k=0.005, T_env=20, T_init=90):
+    '''
+    Given an initial temperature 'T_init', an ambient temperature 'T_env',
+    and a cooling rake, return the time required required to reach a target
+    temperature 'T_targ'.
+    '''
+
+    t = -1/k * np.log((T_targ - T_env)/(T_init-T_env))
+    return t
+
 
 # solve our coffee problem
-t_cream = solve_temp(time, T_init=85)
-t_nocream = solve_temp(time, T_init=90)
+T_cream = solve_temp(t, T_init=85)
+T_nocream = solve_temp(t, T_init=90)
 
 # get time to drinkable temp
-t_cream = time_to_temp(60, T_init=85)
-t_nocream = time_to_temp(90, T_init=90)
-t_smart = time_to_temp(65, T_init=90) # add cream in at 65 deg.
+t_cream = time_to_targ(60, T_init=85)   # scenario 1: add cream in at beginning
+t_nocream = time_to_targ(60, T_init=90) # scenario 2: add cream in at end (at desired temp)
+t_smart = time_to_targ(65, T_init=90)   # class solution: add cream in at 65 deg.
+
+
+## Plot!!
+
+# create figure and axes objects
+fig, ax = plt.subplots(1,1)
+
+# plot lines, label
+ax.plot(t, T_nocream, label="No cream til cool")
+ax.plot(t, T_cream, label="Cream right away")
+
+ax.axvline(t_nocream, color='r', ls='--', label="No cream: T=60")
+ax.axvline(t_cream, color='b', ls='--', label="Cream: T=60")
+ax.axvline(t_smart, color='gray', ls='--', label="No Cream: T=65")
+
+ax.legend(loc='best')
+fig.tight_layout()
+
+plt.show()
